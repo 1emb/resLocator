@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Restaurant Locator by Minh Nguyen and Aditya Jaiswal</title>
+	<meta charset="utf-8">
+	<style>
+
+		#dropdown-menu{
+      text-align: center;
+    }
+
+		#message{
+      text-align: center;
+    }
+
+		h1{
+			text-align: center;
+		}
+
+		h2{
+			text-align: center;
+		}
+
+		table {
+			border-collapse: collapse;
+		}
+
+		th, td {
+			border: 1px solid black;
+			padding: 10px;
+		}
+
+	</style>
+</head>
+<body>
+
+<h1 text-align="center">Restaurant Locator</h1>
+
+<h2>Search amongst your favourite restaurants</h2>
+
+<div id="dropdown-menu">
+	<label for="restaurants">Choose a style of Restaurant:</label>
+	<select name="restaurants" id="restaurants">
+		<option value="" selected>Choose any of the following</option>
+		<option value="Family Restaurant">Family style restaurants</option>
+		<option value="Italian">Italian</option>
+		<option value="Pizza">Pizza</option>
+		<option value="Chinese">Chinese</option>
+		<option value="Sushi">Sushi</option>
+	</select>
+	<br></br>
+	<button id="submit_button">Submit</button>
+	<br></br>
+	<p><a href="index.html">Look for other restaurants</a></p>
+	<br></br>
+</div>
+
+<div id="message"></div>
+<br></br>
+<table id="my_table" style="border: 2px solid black; margin-left: auto; margin-right: auto;">
+	<thead>
+		<tr><th>Name</th><th>Address</th><th>Website</th></tr>
+	</thead>
+	<tbody id="restaurant_table"></tbody>
+</table>
+
+<script>
+	let submit = document.getElementById("submit_button");
+	submit.style.width = "200px";
+	submit.style.height = "45px";
+	submit.style.left = "735px";
+	submit.style.top = "140px";
+
+	let table_body = document.getElementById("restaurant_table");
+
+	let message_body = document.getElementById("message");
+	let paragraph = document.createElement("p");
+	message_body.appendChild(paragraph);
+
+	function refresh_table(){
+	  for(let i = document.getElementById("restaurant_table").rows.length - 1; i >= 0; i-- ){
+	      document.getElementById("restaurant_table").deleteRow(i);
+	    }
+	    return;
+	}
+
+	submit.addEventListener("click", function() {
+
+    let res_type = document.getElementById("restaurants").value;
+	  fetch(`/search?style=${res_type}`).then(function(response){
+			refresh_table();
+	    return response.text();
+	  })
+	  .then(function(data){
+	    data = JSON.parse(data);
+	    if(data.length === 0){
+	      paragraph.textContent = "No Restaurants Found";
+	    }
+	    else{
+				if(res_type === ""){
+					 paragraph.textContent = "All your favourite restaurants are displayed below.";
+				}
+				else{
+					 paragraph.textContent = "Restaurants found are displayed below.";
+				}
+	    }
+	    for(let i = 0; i < data.length; i++){
+	      let row = document.createElement("tr");
+	      for(let j = 0; j < 3; j++){
+	        let cell = document.createElement("td");
+	        if(j === 0){
+	          cell.textContent = data[i].name;
+	        }
+	        else if(j === 1){
+	          cell.textContent = data[i].address;
+	        }
+					else{
+						if(data[i].website !== "Website not available"){
+							let para = document.createElement("p");
+							let link = document.createElement("a");
+							link.href = data[i].website;
+							let text = document.createTextNode(data[i].website);
+							link.appendChild(text);
+							para.appendChild(link);
+							cell.append(para)
+						}
+						else{
+							cell.textContent = "Website not available";
+						}
+					}
+	        row.appendChild(cell);
+	      }
+	      table_body.appendChild(row);
+	    }
+	  })
+	  .catch(function(error){
+	    console.log(error);
+	  });
+	});
+
+</script>
+
+</body>
+</html>
