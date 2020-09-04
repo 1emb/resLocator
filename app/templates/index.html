@@ -93,7 +93,7 @@
     <label for="restaurants">Choose a style of Restaurant:</label>
     <select name="restaurants" id="restaurants">
       <option value="" selected>Choose any of the following</option>
-      <option value="Family Restaurant">Family style restaurants</option>
+      <option value="Family">Family style restaurants</option>
       <option value="Italian">Italian</option>
       <option value="Pizza">Pizza</option>
       <option value="Chinese">Chinese</option>
@@ -281,17 +281,9 @@
               body: JSON.stringify({ "name": `${placeResult.name}`, "address": `${placeResult.formatted_address}`, "website": `${placeResult.website}`, "style": `${res_type}` })
             })
             .then(function(response){
-
               console.log("Response: ",response.text());
-              if(response.status === 200){
-                paragraph.textContent = "Success";
-              }
-              else{
-                paragraph.textContent = "Bad Request";
-              }
             })
             .catch(function(error){
-
               console.log(error);
             });
           })

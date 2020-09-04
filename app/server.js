@@ -51,7 +51,6 @@ app.post("/add", function(req,res){
 app.get("/search", function(req,res){
 
   let style = req.query.style;
-  console.log(style);
   if(style === ""){
     pool.query(`SELECT * FROM restaurant`)
     .then(function(response){

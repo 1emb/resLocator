@@ -42,7 +42,7 @@
 	<label for="restaurants">Choose a style of Restaurant:</label>
 	<select name="restaurants" id="restaurants">
 		<option value="" selected>Choose any of the following</option>
-		<option value="Family Restaurant">Family style restaurants</option>
+		<option value="Family">Family style restaurants</option>
 		<option value="Italian">Italian</option>
 		<option value="Pizza">Pizza</option>
 		<option value="Chinese">Chinese</option>
@@ -101,7 +101,7 @@
 					 paragraph.textContent = "All your favourite restaurants are displayed below.";
 				}
 				else{
-					 paragraph.textContent = "Restaurants found are displayed below.";
+					 paragraph.textContent = "All "+ res_type + " Restaurants found are displayed below.";
 				}
 	    }
 	    for(let i = 0; i < data.length; i++){
