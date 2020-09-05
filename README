@@ -1,0 +1,29 @@
+We use "https://codelabs.developers.google.com/codelabs/google-maps-nearby-search-js/#0" as a guild to write our index.html file
+  
+To start:-
+
+In order to go to index.html page hosted on AWS  go to "https://planets-only.net/".
+
+In order to run the code on your computer using localhost:-
+
+1. Clone the repository any where on your computer.
+2. Change directory into the "app" folder.
+3. Then type "npm init"
+4. Followed by "npm install express --save"
+5. Followed by "npm install pg --save"
+6. Then start the server by typing "node server.js"
+7. Now before opening your browser, set up the database.
+8. Open another tab in your command line prompt and type "psql --username postgres"
+9. Then type "CREATE DATABASE favourite_restaurants;"
+10. Then connect to the database using "\c favourite_restaurants;"
+11. Then create a table using the following :-
+
+   CREATE TABLE restaurant (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    address VARCHAR(100),
+    website VARCHAR(100),
+    style VARCHAR(18)
+   );
+
+12. Now open your browser and visit "http://localhost:3000"
